@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="./estilos/inicio.css">
+  <title>Login</title>
+  <style>
+    
+  </style>  
+</head>
+<body>
+  <header>
+      <img src="./imagenes/logo.png" alt="logotipo dek colegio guevara">
+  </header>
+  <main>
+      <div class="login-container">
+        <h2>Iniciar Sesión</h2>
+        <form id="loginForm">
+          <input type="text" id="username" placeholder="Usuario" required>
+          <input type="password" id="password" placeholder="Contraseña" required>
+          <div class="error" id="errorMsg"></div>
+          <button type="submit">Acceder</button>
+          <p>¿No tienes una cuenta? <a href="Registro.html">Resgistrate</a></p>
+        </form>
+    </div>
+  </main>
+  <footer>
+    <div>
+      <p>los dereschos de autor estan reservados a : Maria soledad Monzon </p>
+      <p>Intitucion a cargo: Colegio Prvincial Dr. Ernesto Guevara </p>
+      <p>Correo de Contacto: mm23225996@gmail.com</p>
+    </div>
+  </footer>
+
+
+  <script>
+    const form = document.getElementById('loginForm');
+    const errorMsg = document.getElementById('errorMsg');
+
+  form.addEventListener('submit', async function (e) {
+    e.preventDefault();
+  
+    const username = document.getElementById('username').value.trim();
+    const password = document.getElementById('password').value;
+  
+    // Si el usuario es el predeterminado, usa login-static
+    const isStaticDepartamento = username === "departamento";
+    const loginUrl = isStaticDepartamento
+      ? 'http://localhost:3000/api/login-static'
+      : 'http://localhost:3000/api/login';
+
+
+    try {
+      const response = await fetch(loginUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ nombre_usuario: username, contrasena: password }),
+      });
+    
+      const data = await response.json();
+
+      
+    
+      if (response.ok) {
+        alert(`¡Bienvenido, ${data.usuario}!`);
+        errorMsg.textContent = "";
+            
+        localStorage.setItem('rol', data.rol);
+            
+        // Solo guardar y redirigir si es usuario y tiene DNI
+        if (data.rol === 'usuario' && data.dni) {
+          localStorage.setItem('dni', data.dni);
+          window.location.href = "./VerBoletin.html";
+        } else if (data.rol === 'departamento') {
+          // Limpia el dni por si quedó de una sesión anterior
+          localStorage.removeItem('dni');
+          if (data.usuario === "departamento") {
+            window.location.href = "./registro Colegio.html";
+          } else {
+                        // Al hacer login de departamento en el frontend:
+            localStorage.setItem('rol', data.rol);
+            localStorage.setItem('departamento_usuario', data.usuario);
+            localStorage.setItem('departamento_colegio', data.colegio); // <-- debes devolverlo en el backend
+            window.location.href = "./Cargar Notas.html";
+          }
+        }
+
+
+      } else {
+        // Mostrar mensaje de error
+        if (data.error.includes('Faltan completar')) {
+          alert(data.error); // Mostrar los campos faltantes
+        } else {
+          errorMsg.textContent = data.error;
+        }
+      }
+    } catch (error) {
+      errorMsg.textContent = "Error al conectar con el servidor.";
+    }
+  });
+  
+  </script>
+</body>
+</html>

@@ -1,0 +1,150 @@
+body {
+    font-family: Arial, sans-serif;
+    height: 100vh;
+    background-image: url("../imagenes/Boletinn.png");
+    background-size: cover;
+    background-position: center;
+    margin: 0px;
+    padding: 0px;
+}
+
+header{
+    display: flex;
+    flex-direction: row;
+    justify-content:flex-end;
+    background-color:#ffdbea;
+    text-align: center;
+    margin-top: 0px;
+    padding-top:20px;
+    height: 70px;
+    margin: 0px;
+    font-size: 22px;
+}
+
+
+main{
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+#contenedor{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+    align-content: flex-start;
+}
+
+
+footer{
+    color :whitesmoke;
+    background-color: #1a2e2c;
+    padding-top:40px ;
+    width: 100%;
+    height: 200px;
+}
+
+footer div p{
+    margin-left: 30px;
+}
+
+
+input, button {
+    width: 100%;
+    height: 25px;
+    padding-bottom: 6px;
+    margin: 6px 0;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+button {
+    font-size: 18px;
+    border-radius: 13.14px;
+    background: #2a4d4a;
+    color: white;
+    border: none;
+    cursor: pointer;
+    max-width: 300px;
+    height: 40px;
+}
+
+
+
+button a :hover{
+    background: #2a4d4a;
+    color: white;
+    border: none;
+}
+
+#datos{
+    display : flex;
+    flex-wrap:wrap;
+}
+
+#logoutBtn{
+    margin-bottom: 15px;
+}
+/*
+#guardarNotaBtn{
+    margin-right:50%;
+}
+*/
+
+#botones{
+    display:flex;
+    justify-content: space-between;
+}
+
+
+
+h1 {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 0px;
+}
+
+h2{
+    background-color:#ffdbeae6;
+    max-width:410px ;
+    border-radius: 13.14px;
+    padding: 12px;
+    margin-left: 10px;
+}
+
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 30px;
+    background-color: rgb(240, 240, 240);
+    margin-bottom:100px;
+}
+th, td {
+    border: 1px solid #444;
+    padding: 6px;
+    text-align: center;
+    font-size: 14px;
+}
+th {
+    background-color: #f0f0f0;
+}
+input[type="text"] {
+    width: 100%;
+    box-sizing: border-box;
+    border: none;
+    text-align: center;
+    font-size: 14px;
+    height: 30px;
+}
+caption {
+    font-size: 16px;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+#fecha{
+    width: 100%;
+}
+

@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Ver Boletín</title>
+  <link rel="stylesheet" href="./estilos/cargar notas.css">
+</head>
+<body>
+  <header>
+    <h1>Boletín Escolar</h1> 
+  </header>
+  <main>
+    <!-- Contenedor para mostrar mensajes -->
+    <div id="messageContainer" class="message"></div>
+
+    <button id="logoutBtn">Cerrar sesión</button>
+
+
+    <div id="boletinesContainer">
+      <!-- Los boletines se cargarán dinámicamente aquí -->
+    </div>
+  </main>
+  <script>
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      const boletinesContainer = document.getElementById('boletinesContainer');
+      const messageContainer = document.getElementById('messageContainer');
+
+      // Función para mostrar mensajes en el contenedor
+      function showMessage(message, type = 'error') {
+        messageContainer.textContent = message;
+        messageContainer.className = `message ${type}`;
+        setTimeout(() => {
+          messageContainer.textContent = '';
+          messageContainer.className = 'message';
+        }, 5000); // Ocultar el mensaje después de 5 segundos
+      }
+    
+      // Obtener el DNI del usuario autenticado (guardado en localStorage después del login)
+      const dni = localStorage.getItem('dni');
+    
+      if (!dni) {
+        showMessage('No se encontró el DNI del usuario. Por favor, inicia sesión nuevamente.', 'error');
+        window.location.href = './Inicio.html';
+        return;
+      }
+
+      document.getElementById('logoutBtn').onclick = function() {
+        localStorage.removeItem('dni');
+        localStorage.removeItem('rol');
+        window.location.href = './Inicio.html';
+      }
+    
+      try {
+        const response = await fetch(`http://localhost:3000/api/obtener-boletin/${dni}`);
+        const datos = await response.json();
+      
+        if (!response.ok) {
+          showMessage(datos.error || 'Error al obtener los boletines', 'error');
+          return;
+        }
+
+        
+      
+        boletinesContainer.innerHTML = ''; // Limpiar el contenedor
+      
+        // Agrupar los boletines por fecha
+        const boletinesPorFecha = datos.reduce((acc, registro) => {
+          const fecha = new Date(registro.fecha).toLocaleDateString();
+          if (!acc[fecha]) {
+            acc[fecha] = [];
+          }
+          acc[fecha].push(registro);
+          return acc;
+        }, {});
+      
+        // Mostrar los boletines agrupados por fecha
+        Object.keys(boletinesPorFecha).forEach((fecha) => {
+          const boletinDiv = document.createElement('div');
+          boletinDiv.className = 'boletin';
+        
+          boletinDiv.innerHTML = `
+            <h2>Fecha: ${fecha}</h2>
+            <table>
+              <thead>
+                <tr>
+                  <th>Alumno</th>
+                  <th>Curso</th>
+                  <th>Materia</th>
+                  <th>Informe 1</th>
+                  <th>Informe 2</th>
+                  <th>Cuatrimestre 1</th>
+                  <th>Informe 3</th>
+                  <th>Informe 4</th>
+                  <th>Cuatrimestre 2</th>
+                  <th>Nota Final</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${boletinesPorFecha[fecha]
+                  .map((registro, index) => `
+                  <tr>
+                    <td>${index === 0 ? registro.alumno : ''}</td>
+                    <td>${registro.curso || ''}</td>
+                    <td>${registro.materia}</td>
+                    <td>${registro.informe1 || ''}</td>
+                    <td>${registro.informe2 || ''}</td>
+                    <td>${registro.cuatrimestre1 || ''}</td>
+                    <td>${registro.informe3 || ''}</td>
+                    <td>${registro.informe4 || ''}</td>
+                    <td>${registro.cuatrimestre2 || ''}</td>
+                    <td>${registro.nota_final || ''}</td>
+                  </tr>
+                `)
+                  .join('')}
+              </tbody>
+            </table>
+          `;
+          
+          boletinesContainer.appendChild(boletinDiv);
+        });
+      } catch (error) {
+        console.error('Error al conectar con el servidor:', error);
+        showMessage('Error al conectar con el servidor', 'error');
+      }
+    });
+
+  </script>
+  <style>
+    .message {
+      text-align: center;
+      margin: 10px 0;
+      padding: 10px;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+    .message.error {
+      background-color: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+    }
+    .message.success {
+      background-color: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+    }
+    .boletin {
+      margin-bottom: 20px;
+      padding: 15px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      background-color: rgb(206, 224, 233);
+    }
+    .boletin h2 {
+      margin-bottom: 10px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    } 
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: center;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+  </style>
+</body>
+</html>

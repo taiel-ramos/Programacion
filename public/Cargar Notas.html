@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./estilos/cargar notas.css">
+  <title>Carga de Notas</title>
+</head>
+<body>
+  <header>
+    <h1>Boletín Escolar</h1>
+  </header>
+
+  <main>
+    <form id="formCarga">
+      <div id="datos">
+        <h2 id="dni">DNI del Alumno: <input type="number" id="dniInput"></h2>
+        <h2 id="nombre">Nombre del Estudiante: <input type="text" id="nombreInput" style="width: 300px;"></h2>
+        <h2 id="Cursoyaño">
+          División: <input type="text" id="divisionInput" style="width: 100px;"> 
+          &nbsp;&nbsp;&nbsp;&nbsp; Año: <input type="text" id="cursoInput" style="width: 100px;">
+        </h2>
+        <h2 id="Colegio">Colegio del alumno: 
+          <select id="colegioInput">
+            <option value="">Seleccione un colegio</option>
+          </select>
+        </h2>
+        <h2 id="fecha">Fecha de carga: <input type="date" id="fechaInput" style="width: 400px;"></h2>    
+      </div>
+      <div id="botones">
+        <button type="submit"  id="guardarNotaBtn">Guardar Nota</button>
+        <button type="button" id="logoutBtn">Cerrar sesión</button>
+      </div>
+    </form>
+    
+    <table>
+        <caption>Resumen de Calificaciones</caption>
+        <thead>
+            <tr>
+                <th>Materia</th>
+                <th>Informe 1</th>
+                <th>Informe 2</th>
+                <th>Cuatrimestre 1°</th>
+                <th>Informe 1</th>
+                <th>Informe 2</th>
+                <th>2° Cuatrimestre</th>
+                <th>Nota Final</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+              <td>Lengua</td>
+              <td><input type="number" id="lengua-informe1"></td>
+              <td><input type="number" id="lengua-informe2"></td>
+              <td><input type="number" id="lengua-cuatrimestre1"></td>
+              <td><input type="number" id="lengua-informe3"></td>
+              <td><input type="number" id="lengua-informe4"></td>
+              <td><input type="number" id="lengua-cuatrimestre2"></td>
+              <td><input type="number" id="lengua-nota-final"></tr>
+            
+            <tr><td>Matemáticas</td>
+              <td><input type="number" id="matematicas-informe1"></td>
+              <td><input type="number" id="matematicas-informe2"></td>
+              <td><input type="number" id="matematicas-cuatrimestre1"></td>
+              <td><input type="number" id="matematicas-informe3"></td>
+              <td><input type="number" id="matematicas-informe4"></td>
+              <td><input type="number" id="matematicas-cuatrimestre2"></td>
+              <td><input type="number" id="matematicas-nota-final"></td>
+            </tr>
+
+            <tr>
+              <td>Ciencias Naturales</td>
+              <td><input type="number" id="ciencias-naturales-informe1"></td>
+              <td><input type="number" id="ciencias-naturales-informe2"></td>
+              <td><input type="number" id="ciencias-naturales-cuatrimestre1"></td>
+              <td><input type="number" id="ciencias-naturales-informe3"></td>
+              <td><input type="number" id="ciencias-naturales-informe4"></td>
+              <td><input type="number" id="ciencias-naturales-cuatrimestre2"></td>
+              <td><input type="number" id="ciencias-naturales-nota-final"></td>
+            </tr>
+            
+            <tr>
+              <td>Ciencias Sociales</td>
+              <td><input type="number" id="ciencias-sociales-informe1"></td>
+              <td><input type="number" id="ciencias-sociales-informe2"></td>
+              <td><input type="number" id="ciencias-sociales-cuatrimestre1"></td>
+              <td><input type="number" id="ciencias-sociales-informe3"></td>
+              <td><input type="number" id="ciencias-sociales-informe4"></td>
+              <td><input type="number" id="ciencias-sociales-cuatrimestre2"></td>
+              <td><input type="number" id="ciencias-sociales-nota-final"></td>
+            </tr>
+            <tr>
+              <td>Inglés</td>
+              <td><input type="number" id="ingles-informe1"></td>
+              <td><input type="number" id="ingles-informe2"></td>
+              <td><input type="number" id="ingles-cuatrimestre1"></td>
+              <td><input type="number" id="ingles-informe3"></td>
+              <td><input type="number" id="ingles-informe4"></td>
+              <td><input type="number" id="ingles-cuatrimestre2"></td>
+              <td><input type="number" id="ingles-nota-final"></td>
+            </tr>
+            <tr>
+              <td>Educación Física</td>
+              <td><input type="number" id="educacion-fisica-informe1"></td>
+              <td><input type="number" id="educacion-fisica-informe2"></td>
+              <td><input type="number" id="educacion-fisica-cuatrimestre1"></td>
+              <td><input type="number" id="educacion-fisica-informe3"></td>
+              <td><input type="number" id="educacion-fisica-informe4"></td>
+              <td><input type="number" id="educacion-fisica-cuatrimestre2"></td>
+              <td><input type="number" id="educacion-fisica-nota-final"></td>
+            </tr>
+            <tr>
+              <td>Música</td>
+              <td><input type="number" id="musica-informe1"></td>
+              <td><input type="number" id="musica-informe2"></td>
+              <td><input type="number" id="musica-cuatrimestre1"></td>
+              <td><input type="number" id="musica-informe3"></td>
+              <td><input type="number" id="musica-informe4"></td>
+              <td><input type="number" id="musica-cuatrimestre2"></td>
+              <td><input type="number" id="musica-nota-final"></td>
+            </tr>
+            <tr>
+              <td>Arte</td>
+              <td><input type="number" id="arte-informe1"></td>
+              <td><input type="number" id="arte-informe2"></td>
+              <td><input type="number" id="arte-cuatrimestre1"></td>
+              <td><input type="number" id="arte-informe3"></td>
+              <td><input type="number" id="arte-informe4"></td>
+              <td><input type="number" id="arte-cuatrimestre2"></td>
+              <td><input type="number" id="arte-nota-final"></td>
+            </tr>
+            <tr>
+              <td>Tecnología</td>
+              <td><input type="number" id="tecnologia-informe1"></td>
+              <td><input type="number" id="tecnologia-informe2"></td>
+              <td><input type="number" id="tecnologia-cuatrimestre1"></td>
+              <td><input type="number" id="tecnologia-informe3"></td>
+              <td><input type="number" id="tecnologia-informe4"></td>
+              <td><input type="number" id="tecnologia-cuatrimestre2"></td>
+              <td><input type="number" id="tecnologia-nota-final"></td>
+            </tr>
+            <tr>
+              <td>Informática</td>
+              <td><input type="number" id="informatica-informe1"></td>
+              <td><input type="number" id="informatica-informe2"></td>
+              <td><input type="number" id="informatica-cuatrimestre1"></td>
+              <td><input type="number" id="informatica-informe3"></td>
+              <td><input type="number" id="informatica-informe4"></td>
+              <td><input type="number" id="informatica-cuatrimestre2"></td>
+              <td><input type="number" id="informatica-nota-final"></td>
+            </tr>
+            <tr>
+              <td>Ética y Ciudadanía</td>
+              <td><input type="number" id="etica-ciudadania-informe1"></td>
+              <td><input type="number" id="etica-ciudadania-informe2"></td>
+              <td><input type="number" id="etica-ciudadania-cuatrimestre1"></td>
+              <td><input type="number" id="etica-ciudadania-informe3"></td>
+              <td><input type="number" id="etica-ciudadania-informe4"></td>
+              <td><input type="number" id="etica-ciudadania-cuatrimestre2"></td>
+              <td><input type="number" id="etica-ciudadania-nota-final"></td>
+            </tr>
+            <tr>
+              <td>Religión / Valores</td>
+              <td><input type="number" id="religion-valores-informe1"></td>
+              <td><input type="number" id="religion-valores-informe2"></td>
+              <td><input type="number" id="religion-valores-cuatrimestre1"></td>
+              <td><input type="number" id="religion-valores-informe3"></td>
+              <td><input type="number" id="religion-valores-informe4"></td>
+              <td><input type="number" id="religion-valores-cuatrimestre2"></td>
+              <td><input type="number" id="religion-valores-nota-final"></td>
+            </tr>
+            <tr>
+              <td>Tutoría</td>
+              <td><input type="number" id="tutoria-informe1"></td>
+              <td><input type="number" id="tutoria-informe2"></td>
+              <td><input type="number" id="tutoria-cuatrimestre1"></td>
+              <td><input type="number" id="tutoria-informe3"></td>
+              <td><input type="number" id="tutoria-informe4"></td>
+              <td><input type="number" id="tutoria-cuatrimestre2"></td>
+              <td><input type="number" id="tutoria-nota-final"></td>
+            </tr>
+        </tbody>
+    </table>
+  </main>
+
+  <footer>
+    <div>
+      <p>los dereschos de autor estan reservados a : Maria soledad Monzon </p>
+      <p>Intitucion a cargo: Colegio Prvincial Dr. Ernesto Guevara </p>
+      <p>Correo de Contacto: mm23225996@gmail.com</p>
+    </div>
+  </footer>
+  
+</body>
+<script>
+  const form = document.getElementById('formCarga');
+  const dniInput = document.getElementById('dniInput');
+  const nombreInput = document.getElementById('nombreInput');
+  const cursoInput = document.getElementById('cursoInput');
+  const colegioInput = document.getElementById('colegioInput');
+  
+
+  const rol = localStorage.getItem('rol');
+  const departamento_usuario = localStorage.getItem('departamento_usuario');
+
+
+  
+  // Código JavaScript para manejar la carga de notas
+
+  const colegioDepartamento = "Colegio Provincial Dr.Ernesto Guevara"; // Cambiar dinámicamente según el usuario del departamento
+
+  document.getElementById('logoutBtn').onclick = function() {
+    localStorage.removeItem('dni');
+    localStorage.removeItem('rol');
+    window.location.href = './Inicio.html';
+  };
+
+  dniInput.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      dniInput.blur(); // dispara el evento blur para cargar los datos
+    }
+  });
+
+  dniInput.addEventListener('blur', async () => {
+    const dni = dniInput.value.trim();
+
+    if (!dni) {
+      alert('Por favor, ingrese un DNI.');
+      return;
+    }
+
+    try {
+      const response = await fetch(`http://localhost:3000/api/verificar-alumno/${dni}`);
+      const data = await response.json();
+
+      /*if (response.ok) {
+        alert(`Usuario registrado: ${data.alumno.nombre_usuario}`);
+        nombreInput.value = data.alumno.nombre_usuario || ''; // Autocompletar el nombre
+        cursoInput.value = data.alumno.curso || ''; // Autocompletar el curso
+        document.getElementById('divisionInput').value = data.alumno.division || ''; // Autocompletar la división
+        colegioInput.value = data.alumno.colegio || ''; // Autocompletar el colegio
+        //variable de control 
+        form.dataset.usuarioRegistrado = "true";
+      } else {
+        alert('El usuario no está registrado.');
+        // Preguntar de ejecucion
+        const continuar = confirm('¿Desea guardar el boletín de igual manera con este DNI?');
+        if (continuar) {
+        form.dataset.usuarioRegistrado = "false";
+        // Permitir continuar, pero dejar los campos vacíos para que los complete manualmente
+        } else {
+          // Limpiar campos y bloquear el formulario si no desea continuar
+          nombreInput.value = '';
+          cursoInput.value = '';
+          document.getElementById('divisionInput').value = '';
+          colegioInput.value = '';
+          form.dataset.usuarioRegistrado = "cancelado";
+          return;
+        }
+      }*/
+
+      if (response.ok) {
+          // Validar si el colegio coincide
+          const colegioSeleccionado = colegioInput.value;
+          if (data.alumno.colegio !== colegioSeleccionado) {
+            alert('Este usuario no pertenece a este colegio.');
+            // Limpiar el formulario
+            nombreInput.value = '';
+            cursoInput.value = '';
+            document.getElementById('divisionInput').value = '';
+            dniInput.value = '';
+            colegioInput.value = '';
+            form.dataset.usuarioRegistrado = "cancelado";
+            return;
+          }
+          // Si el colegio coincide, autocompletar normalmente
+          alert(`Usuario registrado: ${data.alumno.nombre_usuario}`);
+          nombreInput.value = data.alumno.nombre_usuario || '';
+          cursoInput.value = data.alumno.curso || '';
+          document.getElementById('divisionInput').value = data.alumno.division || '';
+          colegioInput.value = data.alumno.colegio || '';
+          form.dataset.usuarioRegistrado = "true";
+        } else {
+          alert('El usuario no está registrado.');
+          const continuar = confirm('¿Desea guardar el boletín de igual manera con este DNI?');
+          if (continuar) {
+            form.dataset.usuarioRegistrado = "false";
+          } else {
+            nombreInput.value = '';
+            cursoInput.value = '';
+            document.getElementById('divisionInput').value = '';
+            colegioInput.value = '';
+            dniInput.value = '';
+            form.dataset.usuarioRegistrado = "cancelado";
+            return;
+          }
+        }   
+
+       // --- NUEVO: Traer y mostrar notas anteriores ---
+      const notasResp = await fetch(`http://localhost:3000/api/obtener-boletin/${dni}`);
+      if (notasResp.ok) {
+        const notas = await notasResp.json();
+        notas.forEach(materia => {
+          // El nombre debe coincidir con el value de cada input
+          const prefix = materia.materia.toLowerCase().replace(/ /g, '-').replace(/[^\w-]/g, '');
+          if (document.getElementById(`${prefix}-informe1`)) document.getElementById(`${prefix}-informe1`).value = materia.informe1 ?? '';
+          if (document.getElementById(`${prefix}-informe2`)) document.getElementById(`${prefix}-informe2`).value = materia.informe2 ?? '';
+          if (document.getElementById(`${prefix}-cuatrimestre1`)) document.getElementById(`${prefix}-cuatrimestre1`).value = materia.cuatrimestre1 ?? '';
+          if (document.getElementById(`${prefix}-informe3`)) document.getElementById(`${prefix}-informe3`).value = materia.informe3 ?? '';
+          if (document.getElementById(`${prefix}-informe4`)) document.getElementById(`${prefix}-informe4`).value = materia.informe4 ?? '';
+          if (document.getElementById(`${prefix}-cuatrimestre2`)) document.getElementById(`${prefix}-cuatrimestre2`).value = materia.cuatrimestre2 ?? '';
+          if (document.getElementById(`${prefix}-nota-final`)) document.getElementById(`${prefix}-nota-final`).value = materia.nota_final ?? '';
+        });
+      }
+      // --- FIN NUEVO ---
+
+    } catch (error) {
+      console.error('Error al verificar el alumno o cargar notas:', error);
+      alert('Error al verificar el alumno o cargar notas.');
+    }
+  });
+  
+  const guardarNotaBtn = document.getElementById('guardarNotaBtn'); // Botón con el id agregado
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault(); // Evita que la página se recargue
+    console.log('Evento submit detectado'); // Log para depuración
+
+    const alumno = nombreInput.value.trim();
+    const curso = cursoInput.value.trim();
+    const dni = dniInput.value.trim();
+    const colegio = colegioInput.value.trim();
+
+    const body = {
+      alumno, curso, materias, dni, colegio,
+      rol,
+      departamento_usuario
+    };
+
+
+
+    // Si el usuario no quiso continuar, cancelar el submit
+    if (form.dataset.usuarioRegistrado === "cancelado") {
+      alert('No se guardó el boletín porque el usuario no está registrado y no se confirmó la acción.');
+      e.preventDefault();
+      return;
+    }
+
+    if (!alumno || !curso || !dni || !colegio) {
+      alert('Por favor, complete todos los campos obligatorios.');
+      return;
+    }
+      // Capturar datos del formulario
+    const materias = [
+      { //hay que tdejar las demas materias con este formato
+        nombre: "Lengua",
+        informe1: document.getElementById('lengua-informe1') ? parseFloat(document.getElementById('lengua-informe1').value) || null : null,
+        informe2: document.getElementById('lengua-informe2') ? parseFloat(document.getElementById('lengua-informe2').value) || null : null,
+        cuatrimestre1: document.getElementById('lengua-cuatrimestre1') ? parseFloat(document.getElementById('lengua-cuatrimestre1').value) || null : null,
+        informe3: document.getElementById('lengua-informe3') ? parseFloat(document.getElementById('lengua-informe3').value) || null : null,
+        informe4: document.getElementById('lengua-informe4') ? parseFloat(document.getElementById('lengua-informe4').value) || null : null,
+        cuatrimestre2: document.getElementById('lengua-cuatrimestre2') ? parseFloat(document.getElementById('lengua-cuatrimestre2').value) || null : null,
+        nota_final: document.getElementById('lengua-nota-final') ? parseFloat(document.getElementById('lengua-nota-final').value) || null : null,
+      },
+      {
+        nombre: "Matemáticas",
+        informe1: document.getElementById('matematicas-informe1') ? parseFloat(document.getElementById('matematicas-informe1').value) || null :null,
+        informe2: document.getElementById('matematicas-informe2') ? parseFloat(document.getElementById('matematicas-informe2').value) || null :null,
+        cuatrimestre1: document.getElementById('matematicas-cuatrimestre1') ? parseFloat(document.getElementById('matematicas-cuatrimestre1').value) || null :null,
+        informe3: document.getElementById('matematicas-informe3') ? parseFloat(document.getElementById('matematicas-informe3').value) || null :null,
+        informe4: document.getElementById('matematicas-informe4') ? parseFloat(document.getElementById('matematicas-informe4').value) || null :null,
+        cuatrimestre2: document.getElementById('matematicas-cuatrimestre2') ? parseFloat(document.getElementById('matematicas-cuatrimestre2').value) || null :null,
+        nota_final : document.getElementById('matematicas-nota-final') ? parseFloat(document.getElementById('matematicas-nota-final').value) || null :null,
+      },
+      {
+        nombre: "Ciencias Naturales",
+        informe1: document.getElementById('ciencias-naturales-informe1') ? parseFloat(document.getElementById('ciencias-naturales-informe1').value) || null : null,
+        informe2: document.getElementById('ciencias-naturales-informe2') ? parseFloat(document.getElementById('ciencias-naturales-informe2').value) || null : null,
+        cuatrimestre1: document.getElementById('ciencias-naturales-cuatrimestre1') ? parseFloat(document.getElementById('ciencias-naturales-cuatrimestre1').value) || null : null,
+        informe3: document.getElementById('ciencias-naturales-informe3') ? parseFloat(document.getElementById('ciencias-naturales-informe3').value) || null : null,
+        informe4: document.getElementById('ciencias-naturales-informe4') ? parseFloat(document.getElementById('ciencias-naturales-informe4').value) || null : null,
+        cuatrimestre2: document.getElementById('ciencias-naturales-cuatrimestre2') ? parseFloat(document.getElementById('ciencias-naturales-cuatrimestre2').value) || null : null,
+        nota_final: document.getElementById('ciencias-naturales-nota-final') ? parseFloat(document.getElementById('ciencias-naturales-nota-final').value) || null : null,
+      },
+      {
+        nombre: "Ciencias Sociales",
+        informe1: document.getElementById('ciencias-sociales-informe1') ? parseFloat(document.getElementById('ciencias-sociales-informe1').value) || null : null,
+        informe2: document.getElementById('ciencias-sociales-informe2') ? parseFloat(document.getElementById('ciencias-sociales-informe2').value) || null : null,
+        cuatrimestre1: document.getElementById('ciencias-sociales-cuatrimestre1') ? parseFloat(document.getElementById('ciencias-sociales-cuatrimestre1').value) || null : null,
+        informe3: document.getElementById('ciencias-sociales-informe3') ? parseFloat(document.getElementById('ciencias-sociales-informe3').value) || null : null,
+        informe4: document.getElementById('ciencias-sociales-informe4') ? parseFloat(document.getElementById('ciencias-sociales-informe4').value) || null : null,
+        cuatrimestre2: document.getElementById('ciencias-sociales-cuatrimestre2') ? parseFloat(document.getElementById('ciencias-sociales-cuatrimestre2').value) || null : null,
+        nota_final: document.getElementById('ciencias-sociales-nota-final') ? parseFloat(document.getElementById('ciencias-sociales-nota-final').value) || null : null,
+      },
+      {
+        nombre: "Inglés",
+        informe1: document.getElementById('ingles-informe1') ? parseFloat(document.getElementById('ingles-informe1').value) || null : null,
+        informe2: document.getElementById('ingles-informe2') ? parseFloat(document.getElementById('ingles-informe2').value) || null : null,
+        cuatrimestre1: document.getElementById('ingles-cuatrimestre1') ? parseFloat(document.getElementById('ingles-cuatrimestre1').value) || null : null,
+        informe3: document.getElementById('ingles-informe3') ? parseFloat(document.getElementById('ingles-informe3').value) || null : null,
+        informe4: document.getElementById('ingles-informe4') ? parseFloat(document.getElementById('ingles-informe4').value) || null : null,
+        cuatrimestre2: document.getElementById('ingles-cuatrimestre2') ? parseFloat(document.getElementById('ingles-cuatrimestre2').value) || null : null,
+        nota_final: document.getElementById('ingles-nota-final') ? parseFloat(document.getElementById('ingles-nota-final').value) || null : null,
+      },
+      {
+        nombre: "Educacion Fisica",
+        informe1: document.getElementById('educacion-fisica-informe1') ? parseFloat(document.getElementById('educacion-fisica-informe1').value) || null : null,
+        informe2: document.getElementById('educacion-fisica-informe2') ? parseFloat(document.getElementById('educacion-fisica-informe2').value) || null : null,
+        cuatrimestre1: document.getElementById('educacion-fisica-cuatrimestre1') ? parseFloat(document.getElementById('educacion-fisica-cuatrimestre1').value) || null : null,
+        informe3: document.getElementById('educacion-fisica-informe3') ? parseFloat(document.getElementById('educacion-fisica-informe3').value) || null : null,
+        informe4: document.getElementById('educacion-fisica-informe4') ? parseFloat(document.getElementById('educacion-fisica-informe4').value) || null : null,
+        cuatrimestre2: document.getElementById('educacion-fisica-cuatrimestre2') ? parseFloat(document.getElementById('educacion-fisica-cuatrimestre2').value) || null : null,
+        nota_final: document.getElementById('educacion-fisica-nota-final') ? parseFloat(document.getElementById('educacion-fisica-nota-final').value) || null : null,
+      },
+      {
+        nombre: "Arte",
+        informe1: document.getElementById('arte-informe1') ? parseFloat(document.getElementById('arte-informe1').value) || null : null,
+        informe2: document.getElementById('arte-informe2') ? parseFloat(document.getElementById('arte-informe2').value) || null : null,
+        cuatrimestre1: document.getElementById('arte-cuatrimestre1') ? parseFloat(document.getElementById('arte-cuatrimestre1').value) || null : null,
+        informe3: document.getElementById('arte-informe3') ? parseFloat(document.getElementById('arte-informe3').value) || null : null,
+        informe4: document.getElementById('arte-informe4') ? parseFloat(document.getElementById('arte-informe4').value) || null : null,
+        cuatrimestre2: document.getElementById('arte-cuatrimestre2') ? parseFloat(document.getElementById('arte-cuatrimestre2').value) || null : null,
+        nota_final: document.getElementById('arte-nota-final') ? parseFloat(document.getElementById('arte-nota-final').value) || null : null,
+      },
+      {
+        nombre: "Tecnología",
+        informe1: document.getElementById('tecnologia-informe1') ? parseFloat(document.getElementById('tecnologia-informe1').value) || null : null,
+        informe2: document.getElementById('tecnologia-informe2') ? parseFloat(document.getElementById('tecnologia-informe2').value) || null : null,
+        cuatrimestre1: document.getElementById('tecnologia-cuatrimestre1') ? parseFloat(document.getElementById('tecnologia-cuatrimestre1').value) || null : null,
+        informe3: document.getElementById('tecnologia-informe3') ? parseFloat(document.getElementById('tecnologia-informe3').value) || null : null,
+        informe4: document.getElementById('tecnologia-informe4') ? parseFloat(document.getElementById('tecnologia-informe4').value) || null : null,
+        cuatrimestre2: document.getElementById('tecnologia-cuatrimestre2') ? parseFloat(document.getElementById('tecnologia-cuatrimestre2').value) || null : null,
+        nota_final: document.getElementById('tecnologia-nota-final') ? parseFloat(document.getElementById('tecnologia-nota-final').value) || null : null,
+      },
+      {
+        nombre: "Informática",
+        informe1: document.getElementById('informatica-informe1') ? parseFloat(document.getElementById('informatica-informe1').value) || null : null,
+        informe2: document.getElementById('informatica-informe2') ? parseFloat(document.getElementById('informatica-informe2').value) || null : null,
+        cuatrimestre1: document.getElementById('informatica-cuatrimestre1') ? parseFloat(document.getElementById('informatica-cuatrimestre1').value) || null : null,
+        informe3: document.getElementById('informatica-informe3') ? parseFloat(document.getElementById('informatica-informe3').value) || null : null,
+        informe4: document.getElementById('informatica-informe4') ? parseFloat(document.getElementById('informatica-informe4').value) || null : null,
+        cuatrimestre2: document.getElementById('informatica-cuatrimestre2') ? parseFloat(document.getElementById('informatica-cuatrimestre2').value) || null : null,
+        nota_final: document.getElementById('informatica-nota-final') ? parseFloat(document.getElementById('informatica-nota-final').value) || null : null,
+      },
+      {
+        nombre: "Ética y Ciudadanía",
+        informe1: document.getElementById('etica-ciudadania-informe1') ? parseFloat(document.getElementById('etica-ciudadania-informe1').value) || null : null,
+        informe2: document.getElementById('etica-ciudadania-informe2') ? parseFloat(document.getElementById('etica-ciudadania-informe2').value) || null : null,
+        cuatrimestre1: document.getElementById('etica-ciudadania-cuatrimestre1') ? parseFloat(document.getElementById('etica-ciudadania-cuatrimestre1').value) || null : null,
+        informe3: document.getElementById('etica-ciudadania-informe3') ? parseFloat(document.getElementById('etica-ciudadania-informe3').value) || null : null,
+        informe4: document.getElementById('etica-ciudadania-informe4') ? parseFloat(document.getElementById('etica-ciudadania-informe4').value) || null : null,
+        cuatrimestre2: document.getElementById('etica-ciudadania-cuatrimestre2') ? parseFloat(document.getElementById('etica-ciudadania-cuatrimestre2').value) || null : null,
+        nota_final: document.getElementById('etica-ciudadania-nota-final') ? parseFloat(document.getElementById('etica-ciudadania-nota-final').value) || null : null,
+      },
+      {
+        nombre: "Religión / Valores",
+        informe1: document.getElementById('religion-valores-informe1') ? parseFloat(document.getElementById('religion-valores-informe1').value) || null : null,
+        informe2: document.getElementById('religion-valores-informe2') ? parseFloat(document.getElementById('religion-valores-informe2').value) || null : null,
+        cuatrimestre1: document.getElementById('religion-valores-cuatrimestre1') ? parseFloat(document.getElementById('religion-valores-cuatrimestre1').value) || null : null,
+        informe3: document.getElementById('religion-valores-informe3') ? parseFloat(document.getElementById('religion-valores-informe3').value) || null : null,
+        informe4: document.getElementById('religion-valores-informe4') ? parseFloat(document.getElementById('religion-valores-informe4').value) || null : null,
+        cuatrimestre2: document.getElementById('religion-valores-cuatrimestre2') ? parseFloat(document.getElementById('religion-valores-cuatrimestre2').value) || null : null,
+        nota_final: document.getElementById('religion-valores-nota-final') ? parseFloat(document.getElementById('religion-valores-nota-final').value) || null : null,
+      },
+      {
+        nombre: "Tutoría",
+        informe1: document.getElementById('tutoria-informe1') ? parseFloat(document.getElementById('tutoria-informe1').value) || null : null,
+        informe2: document.getElementById('tutoria-informe2') ? parseFloat(document.getElementById('tutoria-informe2').value) || null : null,
+        cuatrimestre1: document.getElementById('tutoria-cuatrimestre1') ? parseFloat(document.getElementById('tutoria-cuatrimestre1').value) || null : null,
+        informe3: document.getElementById('tutoria-informe3') ? parseFloat(document.getElementById('tutoria-informe3').value) || null : null,
+        informe4: document.getElementById('tutoria-informe4') ? parseFloat(document.getElementById('tutoria-informe4').value) || null : null,
+        cuatrimestre2: document.getElementById('tutoria-cuatrimestre2') ? parseFloat(document.getElementById('tutoria-cuatrimestre2').value) || null : null,
+        nota_final: document.getElementById('tutoria-nota-final') ? parseFloat(document.getElementById('tutoria-nota-final').value) || null : null,
+      },
+    ].filter(materia => Object.values(materia).some(value => value !== null));
+    if (materias.length === 0) {
+    alert('Por favor, ingrese al menos una nota para una materia.');
+    return;
+  }
+
+  console.log('Datos enviados al backend:', { alumno, curso, materias, dni, colegio });
+
+  try {
+    /*const response = await fetch('http://localhost:3000/api/guardar-boletin', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ alumno, curso, materias, dni, colegio }),
+    });*/
+    const response = await fetch('http://localhost:3000/api/guardar-boletin', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    });
+
+
+
+    const data = await response.json();
+    if (response.ok) {
+      alert('¡Notas guardadas exitosamente!');
+      form.reset();
+      const notaInputs = document.querySelectorAll('input[type="number"]');
+      notaInputs.forEach(input => input.value = '');
+      dniInput.value = '';
+      // Opcional: limpia el dataset de control
+      form.dataset.usuarioRegistrado = "";
+    }
+    } catch (error) {
+      console.error('Error al conectar con el servidor:', error);
+      alert('Error al conectar con el servidor');
+    }
+  });
+
+
+
+  document.addEventListener('DOMContentLoaded', async () => {
+    const colegioInput = document.getElementById('colegioInput');
+
+    try {
+      const response = await fetch('http://localhost:3000/api/obtener-colegios');
+      const colegios = await response.json();
+
+      if (response.ok) {
+        colegios.forEach((colegio) => {
+          const option = document.createElement('option');
+          option.value = colegio.nombre;
+          option.textContent = colegio.nombre;
+          colegioInput.appendChild(option);
+        });
+      } else {
+        console.error('Error al obtener los colegios:', colegios.error);
+      }
+    } catch (error) {
+      console.error('Error al conectar con el servidor:', error);
+    }
+  });
+</script>
+</html>    

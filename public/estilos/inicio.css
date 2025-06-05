@@ -1,0 +1,78 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-image: url('../imagenes/Boletinn.png');
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+}
+
+img{
+    border-radius: 100%;
+    width: 110px;
+    margin : 10px ; 
+    align-items: initial;
+    justify-content: initial;
+    
+}
+
+.login-container {
+    margin:0 auto; 
+    background-color: #ffdbeae6;
+    align-content: center;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    padding: 30px 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.3);
+    max-width: 300px;
+    width: 100%;
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+input {
+    width: 100%;
+    height: 30px;
+    margin-bottom: 15px;
+    border: 1px solid #ffbaba;
+    border-radius: 5px;
+}
+
+button {
+    width: 101%;
+    padding: 10px;
+    margin-bottom: 10px;
+    margin:0 auto ; 
+    background-color: #2a4d4a;
+    border: none;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.error {
+    color: rgb(119, 107, 114);
+    font-size: 0.9em;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+footer{
+    color :whitesmoke;
+    background-color: #1a2e2c;
+    margin-top: 200px;
+    padding-top:40px ;
+    width: 100%;
+    height: 150px;
+}
+
+footer div p{
+    margin-left:15px;
+}

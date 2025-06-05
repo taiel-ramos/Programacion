@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Registro</title>
+  <link rel="stylesheet" href="./estilos/registro.css">
+</head>
+<body>
+  <div class="register-container">
+    <h2>Registrarse</h2>
+    <form id="registerForm">
+      <input type="text" id="username" placeholder="Usuario" required>
+      <input type="email" id="email" placeholder="Correo electrónico" required>
+      <select id="Colegio" required>
+        <option value="">Selecciona un Colegio</option>
+        <option value="Colegio Provincial Dr.Ernesto Guevara">Colegio Provincial Dr.Ernesto Guevara</option>
+        <option value="Colegio Provincial Dr.Rene Favaloro">Colegio Provincial Dr.Rene Favaloro</option>
+        <option value="Centro Polivalente de Arte.Prof. Diana Cotorruelo">Centro Polivalente de Arte.Prof. Diana Cotorruelo</option>
+        <option value="Colegio Provincial Padre Jose Zink">Colegio Provincial Padre Jose Zink</option>
+      </select>
+      <input type="text" id="DNI" placeholder="DNI" required>
+      <input type="text" id="curso" placeholder="Curso" required>
+      <input type="text" id="division" placeholder="División" required>
+      <input type="password" id="password" placeholder="Contraseña" required>
+      <input type="password" id="confirmPassword" placeholder="Confirmar contraseña" required>
+      <div id="message" class="error"></div>
+      <button type="submit">Crear cuenta</button>
+      <p>¿Ya tienes una cuenta? <a href="Inicio.html">Inicia sesión</a></p>
+    </form>
+  </div>
+
+  <script>
+    const form = document.getElementById('registerForm');
+    const message = document.getElementById('message');
+
+    form.addEventListener('submit', async function (e) {
+      e.preventDefault();
+        
+      const username = document.getElementById('username').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const dni = document.getElementById('DNI').value.trim();
+      const colegio = document.getElementById('Colegio').value.trim();
+      const password = document.getElementById('password').value;
+      const confirmPassword = document.getElementById('confirmPassword').value;
+        
+      console.log('Datos enviados al backend:', { username, email, dni, colegio, password });
+        
+      if (!username || !email || !dni || !colegio || !password || !confirmPassword) {
+        message.textContent = "Todos los campos son obligatorios.";
+        message.className = "error";
+        return;
+      }
+    
+      if (password !== confirmPassword) {
+        message.textContent = "Las contraseñas no coinciden.";
+        message.className = "error";
+        return;
+      }
+    
+      try {
+        const response = await fetch('http://localhost:3000/api/register-departamento', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            nombre_usuario_departamento: username,
+            correo_departamento: email,
+            contrasena_departamento: password,
+            dni_departamento: dni,
+            colegio_departamento: colegio,
+          }),
+        });
+      
+        const data = await response.json();
+      
+        if (response.ok) {
+          alert("¡Registro exitoso!");
+          window.location.href = "./Cargar Notas.html"; // Redirigir a Cargar Notas
+        } else {
+          message.textContent = data.error;
+          message.className = "error";
+        }
+      } catch (error) {
+        console.error('Error al conectar con el servidor:', error);
+        message.textContent = "Error al conectar con el servidor.";
+        message.className = "error";
+      }
+    });
+    
+    
+
+  </script>
+</body>
+</html>

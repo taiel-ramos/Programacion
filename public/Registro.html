@@ -6,47 +6,98 @@
   <link rel="stylesheet" href="./estilos/registro.css">
 </head>
 <body>
-  <div class="register-container">
-    <h2>Registrarse</h2>
-    <form id="registerForm">
-      <input type="text" id="username" placeholder="Usuario" required>
-      <input type="email" id="email" placeholder="Correo electrónico" required>
-      <select id="Colegio" required>
-        <option value="">Selecciona un Colegio</option>
-        <option value="Colegio Provincial Dr.Ernesto Guevara">Colegio Provincial Dr.Ernesto Guevara</option>
-        <option value="Colegio Provincial Dr.Rene Favaloro">Colegio Provincial Dr.Rene Favaloro</option>
-        <option value="Centro Polivalente de Arte.Prof. Diana Cotorruelo">Centro Polivalente de Arte.Prof. Diana Cotorruelo</option>
-        <option value="Colegio Provincial Padre Jose Zink">Colegio Provincial Padre Jose Zink</option>
-      </select>
-      <input type="text" id="DNI" placeholder="DNI" required>
-      <input type="text" id="curso" placeholder="Curso" required>
-      <input type="text" id="division" placeholder="División" required>
-      <input type="date" id="fechaNacimiento" placeholder="Fecha de Nacimiento" required>
-      <input type="password" id="password" placeholder="Contraseña" required>
-      <input type="password" id="confirmPassword" placeholder="Confirmar contraseña" required>
-      <div id="message" class="error"></div>
-      <button type="submit">Crear cuenta</button>
-      <p>¿Ya tienes una cuenta? <a href="Inicio.html">Inicia sesión</a></p>
-    </form>
-  </div>
+  <header >
+    <img src="./imagenes/logo.png" alt="Logotipo del Colegio Guevara">
+  </header>
+  <main >
+    <div class="register-container">
+      <h2>Registrarse</h2>
+      <form id="registerForm">
+        <input type="text" id="username" placeholder="Nombre/Apellido" required>
+        <input type="email" id="email" placeholder="Correo electrónico" required>
+        <select id="modalidad" required>
+          <option value="">Selecciona una Modalidad</option>
+          <option value="Orientación Técnica">Orientación Técnica</option>
+          <option value="Bachillerato">Bachillerato</option>
+        </select>
+        <input type="text" id="DNI" placeholder="DNI" required>
+        <input type="text" id="curso" placeholder="Curso" required>
+        <input type="text" id="division" placeholder="División" required>
+        <input type="date" id="fechaNacimiento" placeholder="Fecha de Nacimiento" required>
+        <input type="password" id="password" placeholder="Contraseña" required>
+        <input type="password" id="confirmPassword" placeholder="Confirmar contraseña" required>
+        <div id="message" class="error"></div>
+        <button type="submit">Crear cuenta</button>
+        <p>¿Ya tienes una cuenta? <a href="Inicio.html">Inicia sesión</a></p>
+      </form>
+    </div>
+  </main>
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-column" >
+        <h4>Sobre Nosotros</h4>
+        <p>Somos una empresa dedicada a brindar soluciones tecnológicas.</p>
+        <p>Intitucion a cargo: Colegio Prvincial Dr. Ernesto Guevara </p>
+        <p>Este sitio web es un proyecto educativo y no tiene fines comerciales.</p>
+      </div>
+      <div class="footer-column">
+        <h4>Enlaces Rapidos</h4>
+        <ul>
+          <li><a href="Inicio.html">Inicio</a></li>
+          <li><a href="Registro.html">Registro</a></li>
+        </ul>
+      </div>
+      <div class="footer-column no-border">
+        <h4>Redes Sociales</h4>
+        <div class="social-icons">
+          <a href="https://www.instagram.com/cpdeg_tecnica?igsh=aGF0ZnNqYXFwcXJz" ><img id="ig" src="./imagenes/descarga.jpg" alt="Instagram-Logo"></a>
+          <a  href="https://www.facebook.com/colegioguevara/?locale=es_LA"><img  id="face" src="./imagenes/faceboock logo.webp" alt="Facebook"></a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 Express Technology Support. Todos los derechos reservados.</p>
+    </div>
+  </footer>
 
   <script>
     const form = document.getElementById('registerForm');
     const message = document.getElementById('message');
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const fechaNacimientoInput = document.getElementById('fechaNacimiento');
+      const today = new Date();
+      const yyyy = today.getFullYear();
+      const mm = String(today.getMonth() + 1).padStart(2, '0');
+      const dd = String(today.getDate()).padStart(2, '0');
+      const maxDate = `${yyyy}-${mm}-${dd}`;
+      fechaNacimientoInput.max = maxDate;
+    });
+
     form.addEventListener('submit', async function(e) {
       e.preventDefault();
         
       const username = document.getElementById('username').value.trim();
       const email = document.getElementById('email').value.trim();
       const dni = document.getElementById('DNI').value.trim();
-      const colegio = document.getElementById('Colegio').value.trim();
+      const modalidad = document.getElementById('modalidad').value.trim();
       const curso = document.getElementById('curso').value.trim();
       const division = document.getElementById('division').value.trim();
       const fechaNacimiento = document.getElementById('fechaNacimiento').value.trim();
+      const today = new Date();
+      const fechaNacimientoDate = new Date(fechaNacimiento);
       const password = document.getElementById('password').value;
       const confirmPassword = document.getElementById('confirmPassword').value;
+
+      
+
+      if (fechaNacimiento > today) {
+        message.textContent = "La fecha de nacimiento no puede ser mayor a hoy.";
+        message.className = "error";
+        return;
+      }
         
-      if (!username || !email || !dni || !colegio || !curso || !division || !fechaNacimiento || !password || !confirmPassword) {
+      if (!username || !email || !dni || !modalidad || !curso || !division || !fechaNacimiento || !password || !confirmPassword) {
         message.textContent = "Todos los campos son obligatorios.";
         message.className = "error";
         return;
@@ -81,7 +132,7 @@
             nombre_usuario: username,
             correo: email,
             dni,
-            colegio,
+            modalidad,
             curso,
             division,
             fecha_nacimiento: fechaNacimiento,

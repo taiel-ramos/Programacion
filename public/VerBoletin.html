@@ -6,21 +6,131 @@
   <link rel="stylesheet" href="./estilos/cargar notas.css">
 </head>
 <body>
-  <header>
+  <header>    
     <h1>Boletín Escolar</h1> 
+    <div id="ajustesContainer" class="ajustes-container">
+      <button id="ajustesBtn" type="button">⚙ Ajustes</button>
+      <div style="height: 10px;"></div>
+      <form id="ajustesForm" style="display:none;">
+        <label>
+          Nombre:
+          <input type="text" id="ajusteNombre" required>
+        </label>
+        <label>
+          Curso:
+          <input type="text" id="ajusteCurso" required>
+        </label>
+        <label>
+          División:
+          <input type="text" id="ajusteDivision" required>
+        </label>
+        <button type="submit">Guardar cambios</button>
+        <button type="button" id="cancelarAjustesBtn">Cancelar</button>
+        <div id="ajustesMsg" class="message"></div>
+      </form>
+    </div>
   </header>
   <main>
     <!-- Contenedor para mostrar mensajes -->
     <div id="messageContainer" class="message"></div>
-
-    <button id="logoutBtn">Cerrar sesión</button>
-
-
+    <div class ="logo-boton">
+      <img  src="./imagenes/logo.png" alt="logotipo dek colegio guevara">
+      <button id="logoutBtn">Cerrar sesión</button>
+    </div>
+      
     <div id="boletinesContainer">
       <!-- Los boletines se cargarán dinámicamente aquí -->
     </div>
   </main>
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-column" >
+        <h4>Sobre Nosotros</h4>
+        <p>Somos una empresa dedicada a brindar soluciones tecnológicas.</p>
+        <p>Intitucion a cargo: Colegio Prvincial Dr. Ernesto Guevara </p>
+        <p>Este sitio web es un proyecto educativo y no tiene fines comerciales.</p>
+      </div>
+      <div class="footer-column">
+        <h4>Enlaces Rapidos</h4>
+        <ul>
+          <li><a href="Inicio.html">Inicio</a></li>
+          <li><a href="Registro.html">Registro</a></li>
+        </ul>
+      </div>
+      <div class="footer-column no-border">
+        <h4>Redes Sociales</h4>
+        <div class="social-icons">
+          <a href="https://www.instagram.com/cpdeg_tecnica?igsh=aGF0ZnNqYXFwcXJz" ><img id="ig" src="./imagenes/descarga.jpg" alt="Instagram-Logo"></a>
+          <a href="https://www.facebook.com/colegioguevara/?locale=es_LA"><img  id="face" src="./imagenes/faceboock logo.webp" alt="Facebook"></a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 Express Technology Support. Todos los derechos reservados.</p>
+    </div>
+  </footer>
   <script>
+
+    const ajustesBtn = document.getElementById('ajustesBtn');
+    const ajustesForm = document.getElementById('ajustesForm');
+    const cancelarAjustesBtn = document.getElementById('cancelarAjustesBtn');
+    const ajusteNombre = document.getElementById('ajusteNombre');
+    const ajusteCurso = document.getElementById('ajusteCurso');
+    const ajusteDivision = document.getElementById('ajusteDivision');
+    const ajustesMsg = document.getElementById('ajustesMsg');
+
+    // Mostrar/ocultar formulario de ajustes
+    ajustesBtn.onclick = () => {
+      ajustesForm.style.display = ajustesForm.style.display === 'none' ? 'block' : 'none';
+      // Rellenar con los datos actuales
+      const primerBoletin = document.querySelector('.boletin');
+      if (primerBoletin) {
+        ajusteNombre.value = primerBoletin.querySelector('span[style*="font-weight:normal"]').textContent.trim();
+        ajusteCurso.value = primerBoletin.innerHTML.match(/Curso: <span[^>]*>(.*?)<\/span>/)?.[1] || '';
+        ajusteDivision.value = primerBoletin.innerHTML.match(/División: <span[^>]*>(.*?)<\/span>/)?.[1] || '';
+      }
+      ajustesMsg.textContent = '';
+    };
+
+    cancelarAjustesBtn.onclick = () => {
+      ajustesForm.style.display = 'none';
+      ajustesMsg.textContent = '';
+    };
+
+    // Guardar cambios
+    ajustesForm.onsubmit = async (e) => {
+      e.preventDefault();
+      ajustesMsg.textContent = '';
+      const nombre = ajusteNombre.value.trim();
+      const curso = ajusteCurso.value.trim();
+      const division = ajusteDivision.value.trim();
+      const dni = localStorage.getItem('dni');
+      if (!nombre || !curso || !division) {
+        ajustesMsg.textContent = 'Todos los campos son obligatorios.';
+        ajustesMsg.className = 'message error';
+        return;
+      }
+      try {
+        const response = await fetch('http://localhost:3000/api/ajustes-usuario', {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ dni, nombre_usuario: nombre, curso, division }),
+        });
+        const data = await response.json();
+        if (response.ok) {
+          ajustesMsg.textContent = '¡Datos actualizados!';
+          ajustesMsg.className = 'message success';
+          ajustesForm.style.display = 'none';
+          location.reload(); // Recargar para ver los cambios reflejados
+        } else {
+          ajustesMsg.textContent = data.error || 'Error al actualizar';
+          ajustesMsg.className = 'message error';
+        }
+      } catch (error) {
+        ajustesMsg.textContent = 'Error al conectar con el servidor.';
+        ajustesMsg.className = 'message error';
+      }
+    };
 
     document.addEventListener('DOMContentLoaded', async () => {
       const boletinesContainer = document.getElementById('boletinesContainer');
@@ -54,13 +164,18 @@
       try {
         const response = await fetch(`http://localhost:3000/api/obtener-boletin/${dni}`);
         const datos = await response.json();
+        console.log('Datos recibidos:', datos); // Para depuración
       
         if (!response.ok) {
           showMessage(datos.error || 'Error al obtener los boletines', 'error');
           return;
         }
 
-        
+        if (!Array.isArray(datos)) {
+          console.error('Los datos recibidos no son un array:', datos);
+          showMessage('Error en el formato de datos recibidos', 'error');
+          return;
+        }
       
         boletinesContainer.innerHTML = ''; // Limpiar el contenedor
       
@@ -76,16 +191,22 @@
       
         // Mostrar los boletines agrupados por fecha
         Object.keys(boletinesPorFecha).forEach((fecha) => {
-          const boletinDiv = document.createElement('div');
+          const primerRegistro = boletinesPorFecha[fecha][0];
+          const boletinDiv = document.createElement('div'); // <--- Agrega esta línea
           boletinDiv.className = 'boletin';
-        
           boletinDiv.innerHTML = `
-            <h2>Fecha: ${fecha}</h2>
+            <h2>
+              Fecha: ${fecha}
+              &nbsp; | &nbsp;
+              Alumno: <span style="font-weight:normal">${primerRegistro.alumno || ''}</span>
+              &nbsp; | &nbsp;
+              Curso: <span style="font-weight:normal">${primerRegistro.curso || ''}</span>
+              &nbsp; | &nbsp;
+              División: <span style="font-weight:normal">${primerRegistro.division || ''}</span>
+            </h2>
             <table>
               <thead>
                 <tr>
-                  <th>Alumno</th>
-                  <th>Curso</th>
                   <th>Materia</th>
                   <th>Informe 1</th>
                   <th>Informe 2</th>
@@ -98,18 +219,16 @@
               </thead>
               <tbody>
                 ${boletinesPorFecha[fecha]
-                  .map((registro, index) => `
+                  .map((registro) => `
                   <tr>
-                    <td>${index === 0 ? registro.alumno : ''}</td>
-                    <td>${registro.curso || ''}</td>
-                    <td>${registro.materia}</td>
-                    <td>${registro.informe1 || ''}</td>
-                    <td>${registro.informe2 || ''}</td>
-                    <td>${registro.cuatrimestre1 || ''}</td>
-                    <td>${registro.informe3 || ''}</td>
-                    <td>${registro.informe4 || ''}</td>
-                    <td>${registro.cuatrimestre2 || ''}</td>
-                    <td>${registro.nota_final || ''}</td>
+                    <td data-label="Materia">${registro.materia}</td>
+                    <td data-label="Informe 1">${registro.informe1 || ''}</td>
+                    <td data-label="Informe 2">${registro.informe2 || ''}</td>
+                    <td data-label="Cuatrimestre 1">${registro.cuatrimestre1 || ''}</td>
+                    <td data-label="Informe 3">${registro.informe3 || ''}</td>
+                    <td data-label="Informe 4">${registro.informe4 || ''}</td>
+                    <td data-label="Cuatrimestre 2">${registro.cuatrimestre2 || ''}</td>
+                    <td data-label="Nota Final">${registro.nota_final || ''}</td>
                   </tr>
                 `)
                   .join('')}

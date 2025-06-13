@@ -30,8 +30,8 @@ function loginStatic(req, res) {
 
 // Registro usuario
 async function register(req, res) {
-  const { nombre_usuario, correo, contrasena, dni, fecha_nacimiento, colegio, curso, division } = req.body;
-  if (!nombre_usuario || !correo || !contrasena || !dni || !fecha_nacimiento || !colegio || !curso || !division) {
+  const { nombre_usuario, correo, contrasena, dni, modalidad, fecha_nacimiento, curso, division } = req.body;
+  if (!nombre_usuario || !correo || !contrasena || !dni || !modalidad|| !fecha_nacimiento || !curso || !division) {
     return res.status(400).json({ error: 'Faltan campos' });
   }
   if (!/^\d{7,8}$/.test(dni)) return res.status(400).json({ error: 'DNI inválido' });
@@ -41,8 +41,8 @@ async function register(req, res) {
   const hash = await bcrypt.hash(contrasena, 10);
 
   db.query(
-    'INSERT INTO usuarios (nombre_usuario, correo, contrasena_hash, DNI, fecha_nacimiento, colegio, curso, division) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
-    [nombre_usuario, correo, hash, dni, fecha_nacimiento, colegio, curso, division],
+    'INSERT INTO usuarios (nombre_usuario, correo, contrasena_hash, DNI, fecha_nacimiento, modalidad, curso, division) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
+    [nombre_usuario, correo, hash, dni, fecha_nacimiento, modalidad, curso, division],
     (err, results) => {
       if (err) {
         // Manejo de error por DNI o correo duplicado
@@ -75,17 +75,26 @@ async function register(req, res) {
 
 // Registro departamento
 async function registerDepartamento(req, res) {
-  const { nombre_usuario_departamento, correo_departamento, contrasena_departamento, dni_departamento, colegio_departamento } = req.body;
-  if (!nombre_usuario_departamento || !correo_departamento || !contrasena_departamento || !dni_departamento || !colegio_departamento) {
+  const { nombre_usuario_departamento, correo_departamento, contrasena_departamento, dni_departamento } = req.body;
+  if (!nombre_usuario_departamento || !correo_departamento || !contrasena_departamento || !dni_departamento ) {
     return res.status(400).json({ error: 'Faltan campos obligatorios' });
   }
   try {
     const hash = await bcrypt.hash(contrasena_departamento, 10);
     db.query(
-      'INSERT INTO departamento_usuarios (nombre, dni, contrasena_hash, correo, colegio) VALUES (?, ?, ?, ?, ?)',
-      [nombre_usuario_departamento, dni_departamento, hash, correo_departamento, colegio_departamento],
+      'INSERT INTO departamento_usuarios (nombre, dni, correo, contrasena_hash) VALUES (?, ?, ?, ?)',
+      [nombre_usuario_departamento, dni_departamento, correo_departamento, hash],
       (err) => {
         if (err) {
+          // Mostrar mensaje específico si es duplicado
+          if (err.code === 'ER_DUP_ENTRY') {
+            if (err.sqlMessage.includes('dni')) {
+              return res.status(409).json({ error: 'El DNI ya está registrado.' });
+            }
+            if (err.sqlMessage.includes('correo')) {
+              return res.status(409).json({ error: 'El correo ya está registrado.' });
+            }
+          }
           console.error('Error al registrar el usuario del departamento:', err);
           return res.status(500).json({ error: 'Error al registrar el usuario del departamento' });
         }
@@ -114,7 +123,7 @@ async function login(req, res) {
       }
       // Verificar campos incompletos
       const camposFaltantes = [];
-      if (!usuario.colegio) camposFaltantes.push('colegio');
+      if (!usuario.modalidad) camposFaltantes.push('modalidad');
       if (!usuario.curso) camposFaltantes.push('curso');
       if (!usuario.division) camposFaltantes.push('división');
       if (!usuario.fecha_nacimiento) camposFaltantes.push('fecha de nacimiento');
@@ -147,8 +156,7 @@ async function login(req, res) {
       return res.status(200).json({
         usuario: usuarioDepartamento.nombre,
         rol: 'departamento',
-        dni: usuarioDepartamento.dni || '',
-        colegio: usuarioDepartamento.colegio || ''
+        dni: usuarioDepartamento.dni || ''
       });
     });
   });

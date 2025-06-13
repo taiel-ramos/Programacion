@@ -6,28 +6,52 @@
   <link rel="stylesheet" href="./estilos/registro.css">
 </head>
 <body>
-  <div class="register-container">
-    <h2>Registrarse</h2>
-    <form id="registerForm">
-      <input type="text" id="username" placeholder="Usuario" required>
-      <input type="email" id="email" placeholder="Correo electrónico" required>
-      <select id="Colegio" required>
-        <option value="">Selecciona un Colegio</option>
-        <option value="Colegio Provincial Dr.Ernesto Guevara">Colegio Provincial Dr.Ernesto Guevara</option>
-        <option value="Colegio Provincial Dr.Rene Favaloro">Colegio Provincial Dr.Rene Favaloro</option>
-        <option value="Centro Polivalente de Arte.Prof. Diana Cotorruelo">Centro Polivalente de Arte.Prof. Diana Cotorruelo</option>
-        <option value="Colegio Provincial Padre Jose Zink">Colegio Provincial Padre Jose Zink</option>
-      </select>
-      <input type="text" id="DNI" placeholder="DNI" required>
-      <input type="text" id="curso" placeholder="Curso" required>
-      <input type="text" id="division" placeholder="División" required>
-      <input type="password" id="password" placeholder="Contraseña" required>
-      <input type="password" id="confirmPassword" placeholder="Confirmar contraseña" required>
-      <div id="message" class="error"></div>
-      <button type="submit">Crear cuenta</button>
-      <p>¿Ya tienes una cuenta? <a href="Inicio.html">Inicia sesión</a></p>
-    </form>
-  </div>
+  <header >
+    <img src="./imagenes/logo.png" alt="Logotipo del Colegio Guevara">
+  </header>
+  <main>
+    <div class="register-container">
+      <h2>Registrarse</h2>
+      <form id="registerForm">
+        <input type="text" id="username" placeholder="Usuario" required>
+        <input type="email" id="email" placeholder="Correo electrónico" required>
+        <input type="text" id="DNI" placeholder="DNI" required>
+        <input type="password" id="password" placeholder="Contraseña" required>
+        <input type="password" id="confirmPassword" placeholder="Confirmar contraseña" required>
+        <div id="message" class="error"></div>
+        <button type="submit">Crear cuenta</button>
+        <p>¿Ya tienes una cuenta? <a href="Inicio.html">Inicia sesión</a></p>
+      </form>
+    </div>
+  </main>
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-column" >
+        <h4>Sobre Nosotros</h4>
+        <p>Somos una empresa dedicada a brindar soluciones tecnológicas.</p>
+        <p>Intitucion a cargo: Colegio Prvincial Dr. Ernesto Guevara </p>
+        <p>Este sitio web es un proyecto educativo y no tiene fines comerciales.</p>
+      </div>
+      <div class="footer-column">
+        <h4>Enlaces Rapidos</h4>
+        <ul>
+          <li><a href="Inicio.html">Inicio</a></li>
+          <li><a href="Registro.html">Registro</a></li>
+        </ul>
+      </div>
+      <div class="footer-column no-border">
+        <h4>Redes Sociales</h4>
+        <div class="social-icons">
+          <a href="https://www.instagram.com/cpdeg_tecnica?igsh=aGF0ZnNqYXFwcXJz" ><img id="ig" src="./imagenes/descarga.jpg" alt="Instagram-Logo"></a>
+          <a href="https://www.facebook.com/colegioguevara/?locale=es_LA"><img  id="face" src="./imagenes/faceboock logo.webp" alt="Facebook"></a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 Express Technology Support. Todos los derechos reservados.</p>
+    </div>
+  </footer>
+  
 
   <script>
     const form = document.getElementById('registerForm');
@@ -39,13 +63,12 @@
       const username = document.getElementById('username').value.trim();
       const email = document.getElementById('email').value.trim();
       const dni = document.getElementById('DNI').value.trim();
-      const colegio = document.getElementById('Colegio').value.trim();
       const password = document.getElementById('password').value;
       const confirmPassword = document.getElementById('confirmPassword').value;
         
-      console.log('Datos enviados al backend:', { username, email, dni, colegio, password });
+      console.log('Datos enviados al backend:', { username, email, dni, password });
         
-      if (!username || !email || !dni || !colegio || !password || !confirmPassword) {
+      if (!username || !email || !dni || !password || !confirmPassword) {
         message.textContent = "Todos los campos son obligatorios.";
         message.className = "error";
         return;
@@ -66,7 +89,6 @@
             correo_departamento: email,
             contrasena_departamento: password,
             dni_departamento: dni,
-            colegio_departamento: colegio,
           }),
         });
       
